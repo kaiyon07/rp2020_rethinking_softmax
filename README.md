@@ -1,1 +1,1 @@
-# rp2020_rethinking_softmax
+# Reproducibility Challenge 2020
