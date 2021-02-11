@@ -23,9 +23,15 @@ We included the following additional features apart from the original code:
 ```shell
 python mmc_center_gen.py --var=10 --dim_dense=256 --num_class=10
 ```
-`var` is distance between the MMC centers `$C_{MMC}$`
+`var` is distance between the MMC centers `$C_{MMC}$`, `dim_dense` is the dimension of the final dense layer, `num_class` is the number of the classes present in the dataset. 
+We have also implemented a `no_args` version of `mmc_center_gen.py` under `center_gen_python/mmc_center_gen_no_args.py'.
+```shell
+python mmc_center_gen.py
+```
+changes to be made on the line `Line 17` for `var`, `dim_dense` and `num_class` respectively.
 
-$ \sum_{\forall i}{x_i^{2}} $
+- **Hierarchical MMC Centers(HMMC):**
+
 ## Usage:
 
 ### Training:
