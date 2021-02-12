@@ -129,7 +129,7 @@ python advtest_iterative_blackbox.py --batch_size=50 --optimizer='Adam' --attack
 ```
 For black box attacks, a substitute model is used to create examples. The parameter `model_1` is the model that is used to craft the adversarial examples while `model_2` refers to the model that the attacks is done on. Both the parameters take similar values and can take the values `SCE`, `MMC-10`, `MMC-100`, `AT-SCE`, `AT-MMC-10`, `AT-MMC-100`.
 
--**Black-box gradient-free attack (SPSA)**
+- **Black-box gradient-free attack (SPSA)**
 The command used to evaluate the models on these attacks is given below
 ```shell
 python advtest_others.py --mean_var=10 --batch_size=50 --attack_method='SPSA' --attack_method_for_advtrain=None --dataset=[dataset] --target=False --use_ball=True --use_MMLDA=True --use_advtrain=False --adv_ratio=1.0 --use_target=False --epoch=[epoch] --use_BN=True -normalize_output_for_ball=False --use_random=False --use_dense=True --use_leaky=False --SPSA_epsilon=8
