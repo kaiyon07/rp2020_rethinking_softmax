@@ -44,14 +44,13 @@ python hmmc_gen.py --var=10 --dim_dense=256 --num_class=100 --var_2=1 --num_sup_
 python joint_mmc.py --var=10 --dim_dense=256 --num_class=10 
 ```
 
-- **PyTorch MMC Centers loss:**
+- **PyTorch MMC Centers loss:** We have also implemented a pytorch version of MMC center loss under `mmc_torch`.
 
-
-
-**Note:** All the generated centers ( `.mat` file ) are present under `center_gen_python/generated_centers`.
+**Note:** All the generated centers (`.mat` file) are present under `center_gen_python/generated_centers`.
 
 
 ## Usage:
+The original implementation of MMC centers loss can be found at [Max-Mahalanobis-Training](https://github.com/P2333/Max-Mahalanobis-Training). The training procedure is same as mentioned in the original repository. We additional provide inference code for testing purpose as there was no support for inference in the original repository because the validation split was same as testing split.
 
 ### Training:
 
