@@ -41,11 +41,13 @@ python hmmc_gen.py --var=10 --dim_dense=256 --num_class=100 --var_2=1 --num_sup_
 ```shell
 python isometric_args.py --var=10 --dim_dense=256 --num_class=100 --lr=0.0001 --steps=100000
 ```
+`var`, `dim_dense`, `num_class` are the usual parameters, `lr` is learning and `steps` is the number of the optimization steps.
 
 - **Distorted MMC Centers (DMMC):** DMMC is also a variant of MMC center loss, where two centers can be brought closer to each other and vice versa depending on the similarity index value. Implementation can be found under `center_gen_python/joint_mmc.py`. 
  ```shell
 python joint_mmc_args.py --var=10 --dim_dense=256 --num_class=10 --sim=0.1 --class1=4 --class2=6 --alpha1=0.4 --alpha2=0.6  
 ```
+`var`, `dim_dense`, `num_class` are the usual parameters, `class1` and `class2` are the indices of the class whose distance are being manipulated. `alpha1` and `alpha2` are the corresponding weights of class and `sim` is the similarity value between `class1` and `class2`.
 
 - **PyTorch MMC Centers loss:** We have also implemented a pytorch version of MMC center loss under `mmc_torch`.
 
