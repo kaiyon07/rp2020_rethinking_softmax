@@ -78,7 +78,7 @@ The flag `use_ball` can be changed to `False` if you want to train the model on 
 The `meanvar` parameter can be used to change the distance between the optimal centers.
 
 - **Training the models adversarially using SCE loss**
-Models can be trained with MMC loss by the following commands:
+Models can be trained adversarially with SCE loss by the following commands:
 ```shell
 python advtrain.py --batch_size=50 --dataset=[dataset] --optimizer='mom' --lr=0.01 --version=2 --adv_ratio=1.0 --use_MMLDA=False --use_target=False --attack_method='MadryEtAl' --use_BN=True --use_random=False
 ```
@@ -87,9 +87,59 @@ The `meanvar` parameter can be used to change the distance between the optimal c
  The parameter `attack_method` can be changed to `MadryEtAl`, `FastGradientMethod` or `MomentumIterativeMethod`. The flag `use_target` if `True` uses targeted attacks to train the model and if `False` uses untargeted attacks to train it.
 
 - **Training the models adversarially using MMC loss**
-Models can be trained with MMC loss by the following commands:
+Models can be trained adversarially with MMC loss by the following commands:
 ```shell
 python advtrain.py --batch_size=50 --mean_var=10 --dataset=[dataset] --optimizer='mom' --lr=0.01 --version=2 --adv_ratio=1.0 --use_MMLDA=True --use_ball=True --use_target=True --attack_method='MadryEtAl' --use_BN=True --use_random=False
 ```
 Here `dataset` can be either `mnist`, `cifar10` or `cifar100` as done by original author. The parameter `attack_method` can be changed to `MadryEtAl`, `FastGradientMethod` or `MomentumIterativeMethod`. The flag `use_target` if `True` uses targeted attacks to train the model and if `False` uses untargeted attacks to train it.
 ### Inference:
+We have written a test.py file to evaluate the models seperately after the training is done.
+- **Evaluation of trained models**
+After training, weights of the trained models are saved for future use. These weights can be used to evaluate the models.
+```shell
+python test.py --batch_size=50 --mean_var=10 --dataset=[dataset] -optimizer='mom' --lr=0.01 --version=2 --use_MMLDA=True --use_ball=True --use_BN=True --use_random=False --use_dense=True --use_leaky=False --load_weights=[location]
+```
+All the parameters are same as used in training commands. A new parameter `load_weights` is given the weights of the model that needs to be evaluated. The parameters should be same as the ones used to train the model.
+
+- **White-box L-infinity attack (PGD)**
+Evaluation of models on these attacks can be done using this command 
+```shell
+python advtest_iterative.py --batch_size=50 --attack_method='MadryEtAl' --attack_method_for_advtrain=None --dataset=[dataset] --target=True --num_iter=10 --use_ball=True --use_MMLDA=True --use_advtrain=False --epoch=[epoch] --use_BN=True --normalize_output_for_ball=False --use_random=False --use_target=False
+```
+Here `dataset` can be either `mnist`, `cifar10` or `cifar100` as done by original author. The parameter `attack_method` can be changed to `MadryEtAl`, `FastGradientMethod`, `BasicIterativeMethod` or `MomentumIterativeMethod`. 
+The parameter The parameter `use_advtrain` should be set to False if attacks are to be done on models trained with standard SCE or MMC loss and True if the attacks are to be done on adversarially trained models. 
+
+The parameter `attack_method_for_advtrain` would be changed according to the attack that was used to train the said model. The `target` indicates whether use targeted or untargeted attack. The parameter
+`normalize_output_for_ball` is a bool flag to decide whether apply a softmax function to return predictions in the inference phase.
+
+**Note:** The authors of the original paper have used cleverhans: 2.1.0 to perform their adaptive attack experiments. This requires one to change some code in the installed repo itself. The details of the changes are mentioned in the original paper and the original repo itself.
+
+- **White-box L-2 attack (C&W)**
+The command used to evaluate the models on these attacks is given below
+```shell
+python advtest_others.py --mean_var=10 --batch_size=50 --attack_method='CarliniWagnerL2' --attack_method_for_advtrain=None --dataset=[dataset] --target=True --use_ball=True --use_MMLDA=True --use_advtrain=False --adv_ratio=1.0 --use_target=False --epoch=[epoch] --use_BN=True --normalize_output_for_ball=False --use_random=False --use_dense=True --use_leaky=False --CW_confidence=0.
+```
+The parameters here can be used similarly to the parameters used in above subsection.
+The attack_method could also be `ElasticNetMethod` to perform EAD attack.
+
+- **Black-box transfer-based attack (MIM & PGD)**
+The command used to evaluate the models on these attacks is given below
+```shell
+python advtest_iterative_blackbox.py --batch_size=50 --optimizer='Adam' --attack_method='MadryEtAl' --dataset=[dataset] --target=False --num_iter=10 --use_random=False --use_dense=True --use_leaky=False --epoch=[epoch] --use_BN=True --model_1='AT-MMC-100' --model_2='SCE'
+```
+For black box attacks, a substitute model is used to create examples. The parameter `model_1` is the model that is used to craft the adversarial examples while `model_2` refers to the model that the attacks is done on. Both the parameters take similar values and can take the values `SCE`, `MMC-10`, `MMC-100`, `AT-SCE`, `AT-MMC-10`, `AT-MMC-100`.
+
+-**Black-box gradient-free attack (SPSA)**
+The command used to evaluate the models on these attacks is given below
+```shell
+python advtest_others.py --mean_var=10 --batch_size=50 --attack_method='SPSA' --attack_method_for_advtrain=None --dataset=[dataset] --target=False --use_ball=True --use_MMLDA=True --use_advtrain=False --adv_ratio=1.0 --use_target=False --epoch=[epoch] --use_BN=True -normalize_output_for_ball=False --use_random=False --use_dense=True --use_leaky=False --SPSA_epsilon=8
+```
+
+- **General-purpose attack**
+The command used to evaluate the models on these attacks is given below
+```shell
+python advtest_simple_transform.py --mean_var=10 --batch_size=50  --attack_method='Rotation' --attack_method_for_advtrain='MadryEtAl' --dataset=[dataset] --use_ball=True --use_MMLDA=True --use_advtrain=True --epoch=[epoch] --adv_ratio=1.0 --use_target=False --normalize_output_for_ball=False
+```
+These methods are there to check the general robustness of the models to transformations such as Gaussian noise and rotations in the input.
+
+The `attack_method` could be 'Rotation' for rotation transformation or 'Gaussian' for Gaussian noise.
