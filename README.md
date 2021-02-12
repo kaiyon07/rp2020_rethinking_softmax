@@ -44,9 +44,7 @@ python hmmc_gen.py --var=10 --dim_dense=256 --num_class=100 --var_2=1 --num_sup_
 python joint_mmc.py --var=10 --dim_dense=256 --num_class=10 
 ```
 
-- **PyTorch MMC Centers loss:**
-
-
+- **PyTorch MMC Centers loss:** We have also implemented a pytorch version of MMC center loss under `mmc_torch`.
 
 **Note:** All the generated centers ( `.mat` file ) are present under `center_gen_python/generated_centers`.
 
