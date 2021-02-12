@@ -56,14 +56,14 @@ All the experiments are performed on `MNIST`, `CIFAR-10` and `CIFAR-100` dataset
 
 ### Training:
 We train the models the same way the authors of the original paper have done. 
-- ## Training the models using SCE loss
+- **Training the models using SCE loss**
 Models can be trained with SCE loss by the following commands:
 ```shell
 python train.py --batch_size=50 --dataset=[dataset] --optimizer='mom' --lr=0.01 --version=2 --use_MMLDA=False --use_BN=True --use_dense=True --use_leaky=False
 ```
 Here `dataset` can be either `mnist`, `cifar10` or `cifar100` as done by original author.
 Also `version` refers to Resnet architecure.
-- ## Training the models using MMC loss
+- **Training the models using MMC loss**
 Models can be trained with MMC loss by the following commands:
 ```shell
 python train.py --batch_size=50 --mean_var=10 --dataset=[dataset] -optimizer='mom' --lr=0.01 --version=2 --use_MMLDA=True --use_ball=True --use_BN=True --use_random=False --use_dense=True --use_leaky=False
@@ -72,7 +72,7 @@ Here `dataset` can be either `mnist`, `cifar10` or `cifar100` as done by origina
 The flag `use_ball` can be changed to `False` if you want to train the model on MMLDA loss.
 The `meanvar` parameter can be used to change the distance between the optimal centers.
 
-- ## Training the models adversarially using SCE loss
+- **Training the models adversarially using SCE loss**
 Models can be trained with MMC loss by the following commands:
 ```shell
 python advtrain.py --batch_size=50 --dataset=[dataset] --optimizer='mom' --lr=0.01 --version=2 --adv_ratio=1.0 --use_MMLDA=False --use_target=False --attack_method='MadryEtAl' --use_BN=True --use_random=False
@@ -81,7 +81,7 @@ Here `dataset` can be either `mnist`, `cifar10` or `cifar100` as done by origina
 The `meanvar` parameter can be used to change the distance between the optimal centers.
  The parameter `attack_method` can be changed to `MadryEtAl`, `FastGradientMethod` or `MomentumIterativeMethod`. The flag `use_target` if `True` uses targeted attacks to train the model and if `False` uses untargeted attacks to train it.
 
-- ## Training the models adversarially using MMC loss
+- **Training the models adversarially using MMC loss**
 Models can be trained with MMC loss by the following commands:
 ```shell
 python advtrain.py --batch_size=50 --mean_var=10 --dataset=[dataset] --optimizer='mom' --lr=0.01 --version=2 --adv_ratio=1.0 --use_MMLDA=True --use_ball=True --use_target=True --attack_method='MadryEtAl' --use_BN=True --use_random=False
