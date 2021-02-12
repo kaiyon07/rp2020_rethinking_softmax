@@ -37,11 +37,14 @@ python hmmc_gen.py --var=10 --dim_dense=256 --num_class=100 --var_2=1 --num_sup_
 ```
 `var` is the distance between the super-class MMC centers `$C_{MMC}$`, `dim_dense` is the dimension of the final dense layer, `num_class` is the number of the classes present in the dataset, `var_2` is the distance between the sub-class MMC centers and `num_sup_class` is number of super-classes present in the dataset.  
 
-- **Isometric Centers:** For the model with `dim_dense` less than `num_class` then we cannot directly use MMC center loss, we then use isometric center loss. Implementation can be found under `center_gen_python/isometric.py`. 
+- **Isometric Centers:** For the model with `dim_dense` less than `num_class` then we cannot directly use MMC center loss, we then use isometric center loss. Implementation can be found under `center_gen_python/isometric.py`.
+```shell
+python isometric_args.py --var=10 --dim_dense=256 --num_class=100 --lr=0.0001 --steps=100000
+```
 
 - **Distorted MMC Centers (DMMC):** DMMC is also a variant of MMC center loss, where two centers can be brought closer to each other and vice versa depending on the similarity index value. Implementation can be found under `center_gen_python/joint_mmc.py`. 
  ```shell
-python joint_mmc.py --var=10 --dim_dense=256 --num_class=10 
+python joint_mmc_args.py --var=10 --dim_dense=256 --num_class=10 --sim=0.1 --class1=4 --class2=6 --alpha1=0.4 --alpha2=0.6  
 ```
 
 - **PyTorch MMC Centers loss:** We have also implemented a pytorch version of MMC center loss under `mmc_torch`.
