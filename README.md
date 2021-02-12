@@ -6,16 +6,16 @@ Tianyu Pang, Kun Xu, Yinpeng Dong, Chao Du, Ning Chen and Jun Zhu
 ## Environment setup and Libraries used:
 
 We reproduce the results presented in the original paper using the following environment settings:
-- OS: Ubuntu 18.
-- GPU: Geforce 1080 Ti or Tesla P100
-- Cuda: 9.0, Cudnn: v7.03
+- OS: Ubuntu 18.04
+- GPU: Geforce 2080 Ti or Tesla V100
+- Cuda: 9.0
 - Python: 3.6.0
 - cleverhans: 2.1.0
 - Keras: 2.2.4
 - tensorflow-gpu: 1.9.0
-- pytorch:
-- scipy:
-- argparse:
+- pytorch: 1.4.0
+- scipy: 0.17.0
+- argparse: 1.4.0
 
 ## Addition Features Added:
 We included the following additional features apart from the original code:
@@ -51,6 +51,8 @@ python joint_mmc.py --var=10 --dim_dense=256 --num_class=10
 
 ## Usage:
 The original implementation of MMC centers loss can be found at [Max-Mahalanobis-Training](https://github.com/P2333/Max-Mahalanobis-Training). The training procedure is same as mentioned in the original repository. We additional provide inference code for testing purpose as there was no support for inference in the original repository because the validation split was same as testing split.
+
+All the experiments are performed on `MNIST`, `CIFAR-10` and `CIFAR-100` datasets. 
 
 ### Training:
 
