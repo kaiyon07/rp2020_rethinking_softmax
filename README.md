@@ -23,14 +23,20 @@ We included the following additional features apart from the original code:
 ```shell
 python mmc_center_gen.py --var=10 --dim_dense=256 --num_class=10
 ```
-`var` is distance between the MMC centers `$C_{MMC}$`, `dim_dense` is the dimension of the final dense layer, `num_class` is the number of the classes present in the dataset. 
+`var` is the distance between the MMC centers `$C_{MMC}$`, `dim_dense` is the dimension of the final dense layer, `num_class` is the number of the classes present in the dataset. 
+
 We have also implemented a `no_args` version of `mmc_center_gen.py` under `center_gen_python/mmc_center_gen_no_args.py'.
 ```shell
 python mmc_center_gen.py
 ```
 changes to be made on the line `Line 17` for `var`, `dim_dense` and `num_class` respectively.
 
-- **Hierarchical MMC Centers(HMMC):**
+- **Hierarchical MMC Centers (HMMC):** HMMC is a variant of MMC center loss, it is mainly used to create hierarchical tree structure in which a super-class can have multiple sub-class inside it. All these sub-classses have similar representation as compared to the other super-class. Ex- CIFAR-100 has 100 classes having 20 super-classes and each super-class has corresponding 5 sub-classes. Code is provided under `center_gen_python/hmmc_gen.py`
+```shell
+python hmmc_gen.py --var=10 --dim_dense=256 --num_class=100 --var_2=1 --num_sup_class=20
+```
+`var` is the distance between the super-class MMC centers `$C_{MMC}$`, `dim_dense` is the dimension of the final dense layer, `num_class` is the number of the classes present in the dataset, `var_2` is the distance between the sub-class MMC centers and `num_sup_class` is number of superclasses present in the dataset.  
+
 
 ## Usage:
 
