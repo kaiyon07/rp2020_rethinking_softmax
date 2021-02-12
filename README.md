@@ -50,7 +50,7 @@ python joint_mmc.py --var=10 --dim_dense=256 --num_class=10
 
 
 ## Usage:
-The original implementation of MMC Centers Loss can be found at [Max-Mahalanobis-Training](https://github.com/P2333/Max-Mahalanobis-Training). The training procedure is same as mentioned in the original repository. We additional provide inference code for testing purpose as there was no support for inference in the original repo because the validation split was same as testing split.
+The original implementation of MMC centers loss can be found at [Max-Mahalanobis-Training](https://github.com/P2333/Max-Mahalanobis-Training). The training procedure is same as mentioned in the original repository. We additional provide inference code for testing purpose as there was no support for inference in the original repository because the validation split was same as testing split.
 
 ### Training:
 
